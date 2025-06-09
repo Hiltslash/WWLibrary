@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 import json
 import os
-import requests
+import requests #ads
 
 app = Flask(__name__)
 
