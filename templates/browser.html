@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Browse Books</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"
+</head>
+<body>
+    <h1>Browse Books</h1>
+    <h3>Welcome, {{ username }}</h3>
+
+    <ul>
+        {% for title, info in bdata.items() %}
+            <li>
+                "{{ title }}", by {{ info.author }} —
+                Available: {{ info.copiesav }} / {{ info.totalcopies }}
+                
+                <form action="/checkout/{{ username }}" method="post" style="display:inline;">
+    <input type="hidden" name="book_title" value="{{ title }}">
+    <button type="submit"
+        {% if info.copiesav == 0 or title in data.books %}disabled{% endif %}>
+        Check Out
+    </button>
+</form>
+
+            </li>
+        {% endfor %}
+    </ul>
+
+    <br>
+    <a href="/dashboard/{{ username }}">Back to Dashboard</a>
+</body>
+</html>

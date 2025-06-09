@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - {{ username }}</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        h1 { color: darkred; }
+        .section { margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+    <h1>📚 Admin Panel</h1>
+    <p>Logged in as: <strong>{{ username }}</strong></p>
+
+    <div class="section">
+        <h2>📖 Library</h2>
+        <ul>
+            {% for title, info in books.items() %}
+                <li>
+                    <strong>{{ title }}</strong> by {{ info.author }} —
+                    {{ info.copiesav }}/{{ info.totalcopies }} available
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>👥 Users</h2>
+        <ul>
+            {% for uname, uinfo in users.items() %}
+                <li>
+                    <strong>{{ uname }}</strong> —
+                    Level {{ uinfo.level }},
+                    Balance: {{ uinfo.balance }},
+                    Books: {{ uinfo.books }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <hr>
+<h2>📘 Add a New Book</h2>
+<form action="/admin/{{ username }}/add" method="post">
+    <label>Title: <input type="text" name="title" required></label><br>
+    <label>Author: <input type="text" name="author" required></label><br>
+    <label>Series: <input type="text" name="series"></label><br>
+    <label>Total Copies: <input type="number" name="totalcopies" min="1" required></label><br>
+    <button type="submit">Add Book</button>
+</form>
+
+<hr>
+<h2>📕 Existing Books (Edit/Delete)</h2>
+{% for title, info in books.items() %}
+    <form action="/admin/{{ username }}/edit" method="post" style="margin-bottom:10px;">
+        <input type="hidden" name="old_title" value="{{ title }}">
+        <input name="title" value="{{ title }}">
+        <input name="author" value="{{ info.author }}">
+        <input name="series" value="{{ info.series }}">
+        <input type="number" name="totalcopies" value="{{ info.totalcopies }}">
+        <input type="number" name="copiesav" value="{{ info.copiesav }}">
+        <button type="submit">Update</button>
+    </form>
+
+    <form action="/admin/{{ username }}/delete" method="post" style="margin-bottom:20px;">
+        <input type="hidden" name="title" value="{{ title }}">
+        <button type="submit" style="color: red;">Delete</button>
+    </form>
+{% endfor %}
+
+
+    <a href="/dashboard/{{ username }}">⬅ Back to Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+    "Hiltslash": {
+        "level": 2,
+        "books": [],
+        "balance": 100
+    },
+    "Noelle": {
+        "level": 2,
+        "books": [
+            "Rise of Scourge"
+        ],
+        "balance": 500
+    },
+    "Andrew": {
+        "level": 1,
+        "books": [
+            "Warriors 1"
+        ],
+        "balance": 100
+    },
+    "Liberty": {
+        "level": 1,
+        "books": [],
+        "balance": 100
+    }
+}

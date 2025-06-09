@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library - {{ username }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')  }}"
+</head>
+<body>
+    <div><h1>📕 WW Library Dashboard📕</h1>
+    <h3>Welcome, {{username}}</h3></div>
+    <div id="bookslist">
+        <h2>Your books</h2>
+        {% for book in data.books %}
+            <li>{{ book }}
+  <form action="{{ url_for('update_data') }}" method="POST" style="display:inline;">
+    <input type="hidden" name="username" value="{{ username }}">
+    <input type="hidden" name="book" value="{{ book }}">
+    <button type="submit">Return Book</button>
+  </form>
+</li>
+
+        {% endfor %}
+        <a href="/browser/{{username}}">Check out a new book.</a>
+        <a href="/admin/{{username}}">Admin? Click here.</a>
+    </div>
+</body>
+</html>
