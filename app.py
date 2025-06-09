@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 import json
 import os
+import requests #ads
 
 app = Flask(__name__)
 
@@ -224,6 +225,26 @@ def update_data():
 
 
     return redirect(url_for('dashboard', username=username))
+
+@app.route("/update")
+def updatewebsite():
+    url = "https://raw.githubusercontent.com/hiltslash/wwlibrary/main/app.py"
+
+    # Make a GET request to download the file
+    response = requests.get(url)
+    ts = []
+    with open("app.py", "r") as f1:
+        ts = f1.readlines()
+    # Check if the request was successful
+    if response.status_code == 200:
+        with open("app.py", "w", encoding="utf-8") as file:
+            if ts != response.text:
+                file.write(response.text)
+        print("Downloaded and saved as app.py")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+    redirect("/")
+
 
 if __name__ == '__main__':
    app.run(debug=True, port=5001, host='0.0.0.0')
